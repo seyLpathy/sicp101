@@ -24,6 +24,23 @@
             (else (A (- x 1)
                 (A x (- y 1))))))
 
-(A 1 10)
-(A 2 4)
-(A 3 3)
+;(A 1 10)
+;(A 2 4)
+;(A 3 3)
+;from bottom to the top
+
+(define (g n) (A 1 n))
+;2^n
+(define (h n) (A 2 n))
+;2^n^n
+
+;fibonacci with iteration
+(define (fib n)
+    (fib-iter 1 0 n))
+
+(define (fib-iter a b count)
+        (if (= count 0)
+            b
+            (fib-iter (+ a b) a (- count 1))))
+
+(fib 6)

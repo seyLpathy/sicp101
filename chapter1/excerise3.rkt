@@ -41,5 +41,40 @@
 (iter a 0)
 )
 ;inner function work as variable storage 
-(sum-v2 cube 1 inc 10)
+;(sum-v2 cube 1 inc 10)
+
+
+;1.31 define high-order abstraction as product
+;iterative process
+(define (product f a next b)
+    (define (iter-multi a result)
+        (if (> a b) result (iter-multi (next a) (* result (f a)))))
+        (iter-multi a 1)
+        )
+(product identify 1 inc 6)
+
+;1.31
+;this function only works for integer bigger than 2
+(define (f1 x) (if (even? x) (/ x (+ x 1)) (/ (+ x 1) x)))
+(define (cal-pi n)
+    (* 4 (product f1 2 inc n)))
+
+(cal-pi 100)
+
+
+;1.32 abstract the common part of product or multiply
+(define(accumulate combiner null-value term a next b) 
+    (if (> a b) null-value (accumulate combiner  (combiner null-value (term a)) term (next a) next b)))
+(accumulate * 1 identify 1 inc 6)
+(accumulate + 0 identify 1 inc 10)
+
+;1.33 based on 1.32 to add filter function
+(define(accumulate-filter combiner filter null-value term a next b) 
+    (if (> a b) null-value (accumulate-filter combiner filter (if (filter a) (combiner null-value (term a)) null-value) term (next a) next b)))
+(accumulate * 1 identify 1 inc 6)
+(define (even x) (= (remainder x 2) 0))
+(accumulate-filter + even 0 identify 1 inc 10)
+
+
+
 

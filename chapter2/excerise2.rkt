@@ -1,4 +1,5 @@
 #lang racket
+(provide accumulate)
 (define test (list (list 1 2) 3 4))
 (length (list test test))
 ;the basic length functions only count how many time it can apply car to the arguments
@@ -130,3 +131,4 @@ result
 (define (reverse-left sequence)
 (fold-left (lambda (x y) (cons y x)) null sequence))
 (reverse-left x)
+

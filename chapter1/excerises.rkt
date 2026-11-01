@@ -1,4 +1,5 @@
 #lang racket
+(provide prime?)
 (define (add-v1 a b)
     (if (= a 0)
         b

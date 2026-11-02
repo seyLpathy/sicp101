@@ -34,4 +34,33 @@
             (enumerate-interval 1 n))))
 
 ;(make-triple 8)
-(order-triple-equality 8 10)
+;(order-triple-equality 8 10)
+
+
+;excerise 2.42
+(define empty-board null)
+
+(define (adjoin-position new-row k rest-of-queens)
+(cons (list new-row k) rest-of-queens)
+)
+
+(define (safe? k position)
+    (define (iter new-pos rest)
+        (or (null? rest)
+            (and (not (let ((r (car new-pos)) (c (cadr new-pos)) (r2 (caar rest)) (c2 (cadar rest))) (or (= r r2) (= (abs (- r r2)) (abs (- c c2))))))
+            (iter new-pos (cdr rest)))))
+    (iter (car position) (cdr position))
+)
+
+(define (queens board-size)
+    (define (queen-cols k)
+        (if (= k 0) (list empty-board)
+            (filter (lambda (positions) (safe? k positions))
+            ; safe procedure works to filter out the positions that no fit the criteria
+                (flatmap (lambda (rest-of-queens) (map (lambda (new-row) (adjoin-position new-row k rest-of-queens)) (enumerate-interval 1 board-size))) 
+                (queen-cols (- k 1))))))
+    (queen-cols board-size))
+
+
+
+(queens 6)

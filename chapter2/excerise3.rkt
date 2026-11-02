@@ -54,13 +54,31 @@
 
 (define (queens board-size)
     (define (queen-cols k)
+    (display k)
+    (newline )
         (if (= k 0) (list empty-board)
             (filter (lambda (positions) (safe? k positions))
             ; safe procedure works to filter out the positions that no fit the criteria
+            ; line 61 to cons the kth proposed position to the rest k-1 cols which have been checked
                 (flatmap (lambda (rest-of-queens) (map (lambda (new-row) (adjoin-position new-row k rest-of-queens)) (enumerate-interval 1 board-size))) 
                 (queen-cols (- k 1))))))
     (queen-cols board-size))
 
 
 
-(queens 6)
+;(queens 6)
+(define (queens-v1 board-size)
+    (define (queen-cols-v1 k)
+    (display k)
+    (newline )
+        (if (= k 0) (list empty-board)
+            (filter (lambda (positions) (safe? k positions))
+            ; safe procedure works to filter out the positions that no fit the criteria
+            ; line 61 to cons the kth proposed position to the rest k-1 cols which have been checked
+                (flatmap (lambda (new-row) (map (lambda (rest-of-queens) (adjoin-position new-row k rest-of-queens)) (queen-cols-v1 (- k 1))) 
+                ) (enumerate-interval 1 board-size)))))
+    (queen-cols-v1 board-size))
+
+(queens-v1 6)
+;excerise 2.43
+;cause the interchage, it will slow board-size time

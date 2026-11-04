@@ -93,17 +93,24 @@ painter
 (edge2-frame-v1 test-frame)
 
 ;excerise 2.48
-(define (segments-painter segment-list)
-  (lambda (frame)
-    (for-each
-     (lambda (segment)
-       (draw-line
-        ((frame-coord-map frame) (start-segment segment))
-        ((frame-coord-map frame) (end-segment segment))))
-     segment-list)))
+(require sicp-pict)
+
+;(paint (vects->painter (list (vect 0. 0.) (vect 1. 1.) (vect 1. 0.))))
+;(paint (segments->painter (list (segment (vect 0. 0.) (vect 1. 1.))
+ ;                              (segment (vect 0. 1.) (vect 1. 0.)))))
 (define (make-segment start end) (list start end))
 (define (start-segment seg) (car seg))
 (define (end-segment seg) (cadr seg))
 
+;excerise 2.49
+;; 用你自己 2.46/2.47 的 list 表示
+(define outline
+  (segments->painter
+   (list (segment (vect 0 0) (vect 1 0))
+         (segment (vect 1 0) (vect 1 1))
+         (segment (vect 1 1) (vect 0 1))
+         (segment (vect 0 1) (vect 0 0)))))
+;(paint outline)
+(paint (vects->painter (list (vect 0. 0.5) (vect 0.5 1.) (vect 1. 0.5) (vect 0.5 0.) (vect 0. 0.5))))
 
 

@@ -1,5 +1,6 @@
 #lang racket
 (require sicp-pict)
+(provide "sub-vect")
 (define einstein2 (beside einstein (flip-vert einstein)))
 ;(paint einstein2)
 ;right-split painter
